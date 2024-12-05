@@ -1,4 +1,4 @@
-package pantheonsorbonne;
+package fr.pantheonsorbonne.miage.jeuskyjo;
 public enum Valeur {
     DEUX_NEG(-2),
     UN_NEG(-1),
@@ -17,14 +17,16 @@ public enum Valeur {
     DOUZE(12);
 
 
-    private final int valeur;
+    private final int val;
 
     private Valeur(int valeur) {
-        this.valeur = valeur;
+        this.val= valeur;
     }
 
     public int getValeur() {
-        return this.valeur;
+        return this.val;
     }
+
+    
 
 }
