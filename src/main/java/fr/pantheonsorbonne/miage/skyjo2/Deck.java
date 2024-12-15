@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
-
 public class Deck {
 
     private List<SkyjoCard> pioche;
@@ -54,10 +52,5 @@ public class Deck {
         Collections.shuffle(pioche);
         return med.getValeur();
     }
-
-    
-
-    
-
 
 }
