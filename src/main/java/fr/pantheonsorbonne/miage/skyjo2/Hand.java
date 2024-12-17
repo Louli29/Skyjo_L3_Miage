@@ -47,6 +47,16 @@ public class Hand {
         System.out.println("\n");
     }
 
+    public int getNbPoint(){
+        int points=0;
+        for(int j=0; j<hand.get(0).length;j++){
+            for (int i=0; i<hand.size();i++){
+                points += hand.get(i)[j].getValeur();
+            }
+        }
+        return points;
+    }
+
 
 
 

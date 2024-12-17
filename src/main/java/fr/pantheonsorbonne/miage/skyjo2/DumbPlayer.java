@@ -1,12 +1,13 @@
 package fr.pantheonsorbonne.miage.skyjo2;
 
+import java.util.Deque;
 import java.util.Random;
 
 public class DumbPlayer extends Player {
 
     Random rd = new Random();
 
-    public DumbPlayer(Deck d,Poubelle poubelle){
+    public DumbPlayer(Deck d, Deque<SkyjoCard> poubelle){
         super(d, poubelle);
     }
 
@@ -22,7 +23,7 @@ public class DumbPlayer extends Player {
                 chooseKeepOrNot(d.piocher(),false);
             }
             else{
-                poubelle.addCard(card);
+                poubelle.push(card);
                 revealCard();
             }
         }
@@ -59,7 +60,7 @@ public class DumbPlayer extends Player {
 
     public void jouer(){
         knownHand.showHand();
-        chooseKeepOrNot(poubelle.getLastCard(), true);
+        chooseKeepOrNot(poubelle.pop(), true);
         knownHand.showHand();
         if(whereIsColumn() != -1){
             deleteColumn(whereIsColumn());

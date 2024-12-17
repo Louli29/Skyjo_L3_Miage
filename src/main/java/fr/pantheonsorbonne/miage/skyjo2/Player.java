@@ -1,16 +1,17 @@
 package fr.pantheonsorbonne.miage.skyjo2;
+import java.util.Deque;
 import java.util.Random;
 
 
-public abstract class Player {
+public abstract class Player { 
     Hand hand;
     KnownHand knownHand;
     Random rd = new Random();
     Deck d;
-    Poubelle poubelle;
+    Deque<SkyjoCard>  poubelle;
 
 
-    public Player(Deck d,Poubelle p){
+    public Player(Deck d,Deque<SkyjoCard>  p){
         this.d=d;
         this.poubelle=p;
         this.hand=new Hand(d);
@@ -19,24 +20,24 @@ public abstract class Player {
 
     public void replaceCard(int numColumn, int index, SkyjoCard carteRemplacante){
         this.knownHand.get(numColumn)[index]=carteRemplacante;
-        poubelle.addCard(this.hand.remplacerCarte(numColumn,index,carteRemplacante));
+        poubelle.push(this.hand.remplacerCarte(numColumn,index,carteRemplacante));
         
     }
 
     public void deleteColumn(SkyjoCard card, int numColumn){
         SkyjoCard[] column=knownHand.get(numColumn);
         for (int i=0; i<column.length; i++){
-            poubelle.addCard(column[i]);
+            poubelle.push(column[i]);
         }
         knownHand.remove(numColumn);
         hand.deleteColumn(numColumn);
-        poubelle.addCard(card);
+        poubelle.push(card);
     }
 
     public void deleteColumn(int numColumn){
         SkyjoCard[] column=knownHand.get(numColumn);
         for (int i=0; i<column.length; i++){
-            poubelle.addCard(column[i]);
+            poubelle.push(column[i]);
         }
         knownHand.remove(numColumn);
         hand.deleteColumn(numColumn);

@@ -3,9 +3,9 @@ package fr.pantheonsorbonne.miage.skyjo2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Plateau extends PlateauFacade {
+public class PlateauLocal extends PlateauFacade {
 
-    public Plateau(){
+    public PlateauLocal(){ //il faut dire qui gagne et qui commence et bien faire jouer le dernier tour
         super();
         //if(j2.knownHand.nbKnownCard() == 12 && j1.knownHand.nbKnownCard() != 12){
             //j1.jouer();
@@ -17,9 +17,11 @@ public class Plateau extends PlateauFacade {
 
     public List<Player> makeListPlayers(int nbJoueur){
         List<Player> players = new ArrayList<>();
-        for (int i=0; i<nbJoueur;i++){
-            players.add(new DumbPlayer(deck, poubelle));
-        }
+        //for (int i=0; i<nbJoueur;i++){
+            //players.add(new DumbPlayer(deck, poubelle));
+        //}
+        players.add(new DumbPlayer(deck, poubelle));
+        players.add(new SmartPlayer(deck, poubelle));
         return players;
 
     }
@@ -29,7 +31,7 @@ public class Plateau extends PlateauFacade {
 
     public static void main(String[] args){
 
-        Plateau p=new Plateau();
+        PlateauLocal p=new PlateauLocal();
         p.playPlateau();
         
     }

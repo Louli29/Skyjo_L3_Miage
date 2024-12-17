@@ -1,17 +1,20 @@
 package fr.pantheonsorbonne.miage.skyjo2;
 
-import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 
 public abstract class PlateauFacade {//ajouter déclarer un gagnant
     static Deck deck; 
-    static Poubelle poubelle;
+    static Deque<SkyjoCard> poubelle ;
     final List<Player> players;
     final static int nbJoueur=2;
 
     protected PlateauFacade(){
-        Plateau.deck=new Deck();
-        Plateau.poubelle=new Poubelle(deck);
+        PlateauLocal.deck=new Deck();
+        PlateauLocal.poubelle=new LinkedList<SkyjoCard>();
+
+        poubelle.push(deck.piocher());
         this.players=makeListPlayers(nbJoueur);
         
     }    
@@ -25,7 +28,9 @@ public abstract class PlateauFacade {//ajouter déclarer un gagnant
             }
 
         }
-        // afficher le gagnant 
+        for(Player player : players){
+            System.out.println(player.hand.getNbPoint());
+        }
     }
     
     public boolean isOver(){
