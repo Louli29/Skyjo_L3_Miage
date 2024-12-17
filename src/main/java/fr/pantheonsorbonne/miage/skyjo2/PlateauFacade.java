@@ -3,7 +3,7 @@ package fr.pantheonsorbonne.miage.skyjo2;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class PlateauFacade {
+public abstract class PlateauFacade {//ajouter déclarer un gagnant
     static Deck deck; 
     static Poubelle poubelle;
     final List<Player> players;
@@ -12,14 +12,12 @@ public abstract class PlateauFacade {
     protected PlateauFacade(){
         Plateau.deck=new Deck();
         Plateau.poubelle=new Poubelle(deck);
-        this.players=makListPlayers(nbJoueur);
+        this.players=makeListPlayers(nbJoueur);
         
     }    
 
         
-        public void playPlateau() {
-        
-        //boucle pour jouer
+    public void playPlateau() {
         while (isOver()==false) {
             for(Player player : players){
                 System.out.println("  ");
@@ -28,7 +26,8 @@ public abstract class PlateauFacade {
 
         }
         // afficher le gagnant 
-        }
+    }
+    
     public boolean isOver(){
         for(Player player : players){
             if(player.knownHand.nbKnownCard() == 12){
@@ -39,7 +38,7 @@ public abstract class PlateauFacade {
     }
 
 
-    public abstract List<Player> makListPlayers(int nbJoueur);
+    public abstract List<Player> makeListPlayers(int nbJoueur);
 
 
 }

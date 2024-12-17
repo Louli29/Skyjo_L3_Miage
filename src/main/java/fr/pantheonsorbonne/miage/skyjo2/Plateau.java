@@ -7,7 +7,6 @@ public class Plateau extends PlateauFacade {
 
     public Plateau(){
         super();
-        playPlateau();
         //if(j2.knownHand.nbKnownCard() == 12 && j1.knownHand.nbKnownCard() != 12){
             //j1.jouer();
             //dernier tour pour le joueur intelligent 
@@ -16,7 +15,7 @@ public class Plateau extends PlateauFacade {
         //pour le joueur intelligent dès que nb carte connu adv = 11 joueur en mode derniers tours
     }
 
-    public List<Player> makListPlayers(int nbJoueur){
+    public List<Player> makeListPlayers(int nbJoueur){
         List<Player> players = new ArrayList<>();
         for (int i=0; i<nbJoueur;i++){
             players.add(new DumbPlayer(deck, poubelle));
@@ -31,6 +30,7 @@ public class Plateau extends PlateauFacade {
     public static void main(String[] args){
 
         Plateau p=new Plateau();
+        p.playPlateau();
         
     }
 
