@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Deck {
 
-    private List<SkyjoCard> pioche;
+    private List<Card> pioche;
     private final int nbMoinsDeux = 5;
     private final int nbZero = 15;
     private final int nbCarteClassique = 10;
@@ -16,22 +16,22 @@ public class Deck {
         Collections.shuffle(pioche);
     }
 
-    public List<SkyjoCard> makePioche(){
-        List<SkyjoCard> pioche = new ArrayList<>();
+    public List<Card> makePioche(){
+        List<Card> pioche = new ArrayList<>();
         for (Valeur val : Valeur.values()){
             if (val.getValeur()==-2){
                 for (int i=0; i<nbMoinsDeux; i++){
-                    pioche.add(new SkyjoCard(val));
+                    pioche.add(new Card(val));
                 }
             }
             else if (val.getValeur()==0){
                 for (int i=0; i<nbZero; i++){
-                    pioche.add(new SkyjoCard(val));
+                    pioche.add(new Card(val));
                 }
             }
             else{
                 for (int i=0; i<nbCarteClassique; i++){
-                    pioche.add(new SkyjoCard(val));
+                    pioche.add(new Card(val));
                 }
             }
         }
@@ -39,8 +39,8 @@ public class Deck {
 
     }
 
-    public SkyjoCard piocher(){
-        SkyjoCard card=pioche.get(0);
+    public Card piocher(){
+        Card card=pioche.get(0);
         pioche.remove(0);
         return  card ; 
     }
@@ -48,7 +48,7 @@ public class Deck {
     public int getMediane(){//ne fonctionne pas pour l'instant
         int medCard=pioche.size()/2;
         pioche.sort(null);
-        SkyjoCard med = pioche.get(medCard);
+        Card med = pioche.get(medCard);
         Collections.shuffle(pioche);
         return med.getValeur();
     }

@@ -1,34 +1,35 @@
 package fr.pantheonsorbonne.miage.skyjo2;
 
+import java.util.Deque;
 import java.util.Random;
 
 public class DumbPlayer extends Player {
 
     Random rd = new Random();
 
-    public DumbPlayer(Deck d,Poubelle poubelle){
-        super(d, poubelle);
+    public DumbPlayer(Deck d, Deque<Card> poubelle, String name,Hand hand, KnownHand knownHand){
+        super(d, poubelle, name, hand, knownHand);
     }
 
-    public void chooseKeepOrNot(SkyjoCard card,boolean isFromTrash){
+    public void chooseKeepOrNot(Card card,boolean isFromTrash){
         System.out.println(" ");
         System.out.println(card.toString());   
         System.out.println(" "); 
-        if(card.getValeur()<5){
+        if(card.getValeur()<6){
             chooseWhereToReplace(card);
         }
         else{
             if(isFromTrash){
-                chooseKeepOrNot(d.piocher(),false);
+                chooseKeepOrNot(deck.piocher(),false);
             }
             else{
-                poubelle.addCard(card);
+                poubelle.push(card);
                 revealCard();
             }
         }
     }
 
-    public void chooseWhereToReplace(SkyjoCard card){
+    public void chooseWhereToReplace(Card card){
         int i =rd.nextInt(0,knownHand.size());
         int j=rd.nextInt(0,knownHand.get(0).length);
         replaceCard(i, j, card);
@@ -46,7 +47,7 @@ public class DumbPlayer extends Player {
 
     public int whereIsColumn(){
         for (int i=0; i<knownHand.size();i++){
-            SkyjoCard[] column =knownHand.get(i);
+            Card[] column =knownHand.get(i);
             if(knownHand.getValeur(column[0])==knownHand.getValeur(column[1]) && knownHand.getValeur(column[1])==knownHand.getValeur(column[2])){
                 if(knownHand.getValeur(column[0])==-3){
                     return -1;
@@ -59,7 +60,7 @@ public class DumbPlayer extends Player {
 
     public void jouer(){
         knownHand.showHand();
-        chooseKeepOrNot(poubelle.getLastCard(), true);
+        chooseKeepOrNot(poubelle.pop(), true);
         knownHand.showHand();
         if(whereIsColumn() != -1){
             deleteColumn(whereIsColumn());

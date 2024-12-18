@@ -1,11 +1,11 @@
 package fr.pantheonsorbonne.miage.skyjo2;
 
-public class SkyjoCard {
+public class Card {
 
     private Valeur valeur;
     public Object getValeur;
 
-    public SkyjoCard(Valeur valeur){
+    public Card(Valeur valeur){
         this.valeur = valeur;
     }
 
