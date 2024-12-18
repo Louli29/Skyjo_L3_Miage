@@ -4,28 +4,44 @@ import java.util.Random;
 
 
 public abstract class Player { 
+    private final String name;
+    private int score;
     Hand hand;
     KnownHand knownHand;
     Random rd = new Random();
     Deck d;
-    Deque<SkyjoCard>  poubelle;
+    Deque<Card>  poubelle;
 
 
-    public Player(Deck d,Deque<SkyjoCard>  p){
+    public Player(Deck d,Deque<Card>  p, String name, Hand hand, KnownHand knownHand){
+        score=0;
+        this.name=name;
         this.d=d;
         this.poubelle=p;
-        this.hand=new Hand(d);
-        this.knownHand=new KnownHand(hand,poubelle);
+        this.hand=hand;
+        this.knownHand=knownHand;
     }
 
-    public void replaceCard(int numColumn, int index, SkyjoCard carteRemplacante){
+    public void replaceCard(int numColumn, int index, Card carteRemplacante){
         this.knownHand.get(numColumn)[index]=carteRemplacante;
         poubelle.push(this.hand.remplacerCarte(numColumn,index,carteRemplacante));
         
     }
 
-    public void deleteColumn(SkyjoCard card, int numColumn){
-        SkyjoCard[] column=knownHand.get(numColumn);
+    public String getName(){
+        return name;
+    }
+
+    public int getScore(){
+        return score;
+    }
+
+    public void addToScore(int nbPoint){
+        this.score+=nbPoint;
+    }
+
+    public void deleteColumn(Card card, int numColumn){
+        Card[] column=knownHand.get(numColumn);
         for (int i=0; i<column.length; i++){
             poubelle.push(column[i]);
         }
@@ -35,7 +51,7 @@ public abstract class Player {
     }
 
     public void deleteColumn(int numColumn){
-        SkyjoCard[] column=knownHand.get(numColumn);
+        Card[] column=knownHand.get(numColumn);
         for (int i=0; i<column.length; i++){
             poubelle.push(column[i]);
         }
@@ -57,8 +73,8 @@ public abstract class Player {
     }
 
     
-    public abstract void chooseKeepOrNot(SkyjoCard card, boolean isFromTrash);
-    public abstract void chooseWhereToReplace(SkyjoCard card);
+    public abstract void chooseKeepOrNot(Card card, boolean isFromTrash);
+    public abstract void chooseWhereToReplace(Card card);
     public abstract void revealCard();
 
     public abstract void jouer();

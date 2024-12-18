@@ -30,7 +30,7 @@ public class PlateauHost extends PlateauFacade {
         hostFacade.waitForExtraPlayerCount(nbJoueur);
 
         PlateauFacade host = new PlateauHost(hostFacade, skyjo);
-        host.playPlateau();
+        host.playRound();
         System.exit(0);
         
     }

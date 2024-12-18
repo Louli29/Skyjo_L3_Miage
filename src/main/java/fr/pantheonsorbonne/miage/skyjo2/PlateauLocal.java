@@ -18,10 +18,16 @@ public class PlateauLocal extends PlateauFacade {
     public List<Player> makeListPlayers(int nbJoueur){
         List<Player> players = new ArrayList<>();
         //for (int i=0; i<nbJoueur;i++){
+        //initialiser main 
+        //initialiser main connu 
             //players.add(new DumbPlayer(deck, poubelle));
         //}
-        players.add(new DumbPlayer(deck, poubelle));
-        players.add(new SmartPlayer(deck, poubelle));
+        Hand dumbHand= new Hand(deck);
+        KnownHand dumbKnownHand=new KnownHand(dumbHand, poubelle);
+        players.add(new DumbPlayer(deck, poubelle, "Jean",dumbHand,dumbKnownHand));
+        Hand smartHand= new Hand(deck);
+        KnownHand smartKnownHand=new KnownHand(dumbHand, poubelle);
+        players.add(new SmartPlayer(deck, poubelle, "Marie", smartHand, smartKnownHand));
         return players;
 
     }
@@ -31,8 +37,8 @@ public class PlateauLocal extends PlateauFacade {
 
     public static void main(String[] args){
 
-        PlateauLocal p=new PlateauLocal();
-        p.playPlateau();
+        PlateauLocal plateau=new PlateauLocal();
+        plateau.playGame();
         
     }
 

@@ -5,20 +5,20 @@ import java.util.Deque;
 import java.util.List;
 
 public class KnownHand {
-    List<SkyjoCard[]> knownHand=new ArrayList<>();
+    List<Card[]> knownHand=new ArrayList<>();
     Hand hand;
 
     
-    public KnownHand(Hand hand, Deque<SkyjoCard>  poubelle){
+    public KnownHand(Hand hand, Deque<Card>  poubelle){
         this.hand=hand;
         this.knownHand=initialiserMainConnu(hand);
         
     }
 
-    private List<SkyjoCard[]> initialiserMainConnu(Hand hand) {
-        List<SkyjoCard[]> knownHand = new ArrayList<>();
+    private List<Card[]> initialiserMainConnu(Hand hand) {
+        List<Card[]> knownHand = new ArrayList<>();
         for (int i=0; i<4;i++){
-            SkyjoCard[] column=new SkyjoCard[3];
+            Card[] column=new Card[3];
             knownHand.add(i,column);
         }
         
@@ -31,15 +31,15 @@ public class KnownHand {
 
     public int nbKnownCard(){
         int nb=0;
-        for (SkyjoCard[] column : knownHand){
+        for (Card[] column : knownHand){
             nb+=nbKnownCard(column);
         }
         return 12- nb;
     }
 
-    public int nbKnownCard(SkyjoCard[] column){
+    public int nbKnownCard(Card[] column){
         int nb=0;
-        for (SkyjoCard card : column){
+        for (Card card : column){
             if (card == null){
                 nb+=1;
             }
@@ -47,7 +47,7 @@ public class KnownHand {
         return nb;
     }
 
-    public SkyjoCard[] get(int numColumn) {
+    public Card[] get(int numColumn) {
         return knownHand.get(numColumn);
     }
 
@@ -69,7 +69,7 @@ public class KnownHand {
         }
     }
 
-    public int getIndexColumnSameCard(SkyjoCard card){
+    public int getIndexColumnSameCard(Card card){
         int maxNb=0;
         int numColumnMax=-1;
         for (int i =0; i<knownHand.size();i++){
@@ -81,7 +81,7 @@ public class KnownHand {
         return numColumnMax;
     }
 
-    public int cardOccurenceColumn(SkyjoCard card, SkyjoCard[] column){ 
+    public int cardOccurenceColumn(Card card, Card[] column){ 
         int nbSameCard=0;
         for (int i=0;i<column.length;i++){
             if (column[i]==null){
@@ -94,11 +94,11 @@ public class KnownHand {
         return nbSameCard;
     }
 
-    public int getHighCard(SkyjoCard[] column){ //to do implémenter si carte null continue sinon comparer maintenant facile vu q'un co la carte 00
+    public int getHighCard(Card[] column){ //to do implémenter si carte null continue sinon comparer maintenant facile vu q'un co la carte 00
         return 0;
     }
 
-    public int getValeur(SkyjoCard card){//voire si vraiment utile
+    public int getValeur(Card card){//voire si vraiment utile
         if(card==null){
             return -3;
         }

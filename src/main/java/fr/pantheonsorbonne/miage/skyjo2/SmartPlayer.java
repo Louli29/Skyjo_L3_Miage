@@ -4,21 +4,18 @@ import java.util.Deque;
 
 public class SmartPlayer extends Player{
 
-    public SmartPlayer(Deck d, Deque<SkyjoCard>  poubelle){
-        super(d, poubelle);
+    public SmartPlayer(Deck d, Deque<Card>  poubelle, String name,Hand hand, KnownHand knownHand){
+        super(d, poubelle, name, hand, knownHand);
     }
 
-    public void chooseKeepOrNot(SkyjoCard card, boolean isFromTrash){
-        System.out.println("Smart");
-        System.out.println(" ");
-        System.out.println(card.toString());   
-        System.out.println(" "); 
+    public void chooseKeepOrNot(Card card, boolean isFromTrash){
+        System.out.println("\n"+card.toString()+"\n");   
 
-        if (card.getValeur()<0){
+        if (card.getValeur()<=0){
                 chooseWhereToReplace(card);
         }
 
-        else if (knownHand.getIndexColumnSameCard(card) != -1 && card.getValeur()<9){
+        else if (knownHand.getIndexColumnSameCard(card) != -1 ){
             int numColumn = knownHand.getIndexColumnSameCard(card);
             if(knownHand.cardOccurenceColumn(card,knownHand.get(numColumn) ) == 2){
                 deleteColumn(card, numColumn);
@@ -43,7 +40,7 @@ public class SmartPlayer extends Player{
 
     }
 
-    public void columnFail(SkyjoCard card){
+    public void columnFail(Card card){
         if (card.getValeur()<5){
             chooseWhereToReplace(card);
         }
@@ -53,8 +50,8 @@ public class SmartPlayer extends Player{
         }
     }
 
-    public void makeColumn(SkyjoCard card ,int numColumn){ 
-        SkyjoCard[] column=knownHand.get(numColumn);
+    public void makeColumn(Card card ,int numColumn){ 
+        Card[] column=knownHand.get(numColumn);
         int[] indexOthersCards=getIndexOtherCard(card,column);
         int bestIndex=chooseBestIndex(indexOthersCards,column);
         if(bestIndex==-1 && knownHand.getValeur(column[indexOthersCards[0]])<card.getValeur()){
@@ -68,8 +65,8 @@ public class SmartPlayer extends Player{
         }
     }
 
-    public void tryMakeColumn(SkyjoCard card, int numColumn, boolean isFromTrash){
-        if (knownHand.nbKnownCard()>7 && card.getValeur()>5){
+    public void tryMakeColumn(Card card, int numColumn, boolean isFromTrash){
+        if ( knownHand.nbKnownCard()>7 && card.getValeur()>5 ){
             if(isFromTrash){
                 columnFail(card);
             }
@@ -78,12 +75,20 @@ public class SmartPlayer extends Player{
             }
             
         }
+        else if (card.getValeur()>9 ){
+            if(isFromTrash){
+                columnFail(card);
+            }
+            else{
+                revealCard();
+            }
+        }
         else{
             makeColumn(card, numColumn);
         }
     }
 
-    public int[] getIndexOtherCard(SkyjoCard card, SkyjoCard[] column){
+    public int[] getIndexOtherCard(Card card, Card[] column){
         int[] indexTab=new int[2];
         int index=0;
         for (int i =0; i<column.length;i++){
@@ -96,9 +101,9 @@ public class SmartPlayer extends Player{
         return indexTab;
     } 
 
-    public int chooseBestIndex(int[] index, SkyjoCard[] column){
-        SkyjoCard card1 = column[index[0]];
-        SkyjoCard card2 = column[index[1]];
+    public int chooseBestIndex(int[] index, Card[] column){
+        Card card1 = column[index[0]];
+        Card card2 = column[index[1]];
         if (card1==null && card2==null){
             return index[0];
         }
@@ -117,29 +122,33 @@ public class SmartPlayer extends Player{
 
     public int whereEmptyColumn(){
         for (int i =0; i<knownHand.size(); i++){
-            if (knownHand.nbKnownCard(knownHand.get(i))==0){
+            if (knownHand.nbKnownCard(knownHand.get(i))==3){
                 return i; 
             }
         }
         return -1;
     }
 
-    public void chooseWhereToReplace(SkyjoCard card){
+    public void chooseWhereToReplace(Card card){
         if (whereEmptyColumn() != -1){
+            System.out.println("empty column");
             int i = whereEmptyColumn();
             int j=rd.nextInt(0,knownHand.get(i).length);
             replaceCard(i, j, card);
         }
-        else if(knownHand.nbKnownCard()>8){
+        else if(knownHand.nbKnownCard()<8){
+            System.out.println("replace null");
             replaceWhereNull(card);
         }
         else{
-            System.out.println("try replace high card");
+            System.out.println("try replace");
             replaceHighCard(card);
         }
     }
 
-    public void replaceWhereNull(SkyjoCard card){
+    
+
+    public void replaceWhereNull(Card card){
         int i;
         int j;
         do{
@@ -149,17 +158,19 @@ public class SmartPlayer extends Player{
         replaceCard(i, j, card);
     }
 
-    public void replaceHighCard(SkyjoCard card){
-        int i=getHighCard();
-        int j = getHighCardColumn(knownHand.get(i));
+    public void replaceHighCard(Card card){
+        int i=getIndexHighCard();
+        int j = getIndexHighCardColumn(knownHand.get(i));
+        System.out.println(i+"column");
+        System.out.println(j);
         replaceCard(i, j, card);
     }
 
-    public int getHighCard(){
+    public int getIndexHighCard(){
         int maxIndex=0;
-        SkyjoCard highCard=knownHand.get(0)[getHighCardColumn(knownHand.get(0))];
+        Card highCard=knownHand.get(0)[getIndexHighCardColumn(knownHand.get(0))];
         for (int i=1; i<knownHand.size();i++){
-            SkyjoCard currCard=knownHand.get(i)[getHighCardColumn(knownHand.get(i))];
+            Card currCard=knownHand.get(i)[getIndexHighCardColumn(knownHand.get(i))];
             if (knownHand.getValeur(currCard) > knownHand.getValeur(highCard)){
                 highCard=currCard;
                 maxIndex=i;
@@ -169,8 +180,8 @@ public class SmartPlayer extends Player{
         
     }
 
-    public int getHighCardColumn(SkyjoCard[] column){
-        SkyjoCard highCard= column[0];
+    public int getIndexHighCardColumn(Card[] column){
+        Card highCard= column[0];
         int maxIndex=0;
         for (int i=1; i<column.length; i++){
             if (knownHand.getValeur(column[i])> knownHand.getValeur(highCard) && knownHand.cardOccurenceColumn(column[i], column ) == 1){
