@@ -9,22 +9,29 @@ public abstract class Player {
     Hand hand;
     KnownHand knownHand;
     Random rd = new Random();
-    Deck d;
+    Deck deck;
     Deque<Card>  poubelle;
 
 
     public Player(Deck d,Deque<Card>  p, String name, Hand hand, KnownHand knownHand){
         score=0;
         this.name=name;
-        this.d=d;
+        this.deck=d;
         this.poubelle=p;
         this.hand=hand;
         this.knownHand=knownHand;
     }
 
     public void replaceCard(int numColumn, int index, Card carteRemplacante){
-        this.knownHand.get(numColumn)[index]=carteRemplacante;
-        poubelle.push(this.hand.remplacerCarte(numColumn,index,carteRemplacante));
+        Card cardToReplace=knownHand.get(numColumn)[index];
+        if (carteRemplacante.getValeur()==knownHand.getValeur(cardToReplace)){
+            revealCard();
+        }
+        else{
+            this.knownHand.get(numColumn)[index]=carteRemplacante;
+            poubelle.push(this.hand.remplacerCarte(numColumn,index,carteRemplacante));
+        }
+
         
     }
 

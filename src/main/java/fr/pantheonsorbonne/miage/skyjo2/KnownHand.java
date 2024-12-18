@@ -105,5 +105,18 @@ public class KnownHand {
         return card.getValeur();
     }
 
+    public int getNbPoint(){
+        int points=0;
+        for(int j=0; j<knownHand.get(0).length;j++){
+            for (int i=0; i<knownHand.size();i++){
+                if(knownHand.get(i)[j]==null){
+                    continue;
+                }
+                points += knownHand.get(i)[j].getValeur();
+            }
+        }
+        return points;
+    }
+
     
 }

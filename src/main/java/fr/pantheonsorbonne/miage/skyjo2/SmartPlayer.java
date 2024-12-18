@@ -24,20 +24,18 @@ public class SmartPlayer extends Player{
                 tryMakeColumn(card,numColumn,isFromTrash);
             }
         }
-        else if(card.getValeur()<4){
+        else if(card.getValeur()<5){
             chooseWhereToReplace(card);
         }
         else{
             poubelle.push(card);
             if(isFromTrash){
-                chooseKeepOrNot(d.piocher(),false);
+                chooseKeepOrNot(deck.piocher(),false);
             }
             else{
                 revealCard();
             }
-            
         }
-
     }
 
     public void columnFail(Card card){
@@ -46,11 +44,12 @@ public class SmartPlayer extends Player{
         }
         else{
             poubelle.push(card);
-            chooseKeepOrNot(d.piocher(),false);
+            chooseKeepOrNot(deck.piocher(),false);
         }
     }
 
     public void makeColumn(Card card ,int numColumn){ 
+        System.out.println("make column");
         Card[] column=knownHand.get(numColumn);
         int[] indexOthersCards=getIndexOtherCard(card,column);
         int bestIndex=chooseBestIndex(indexOthersCards,column);
@@ -71,6 +70,7 @@ public class SmartPlayer extends Player{
                 columnFail(card);
             }
             else{
+                poubelle.push(card);
                 revealCard();
             }
             
@@ -80,6 +80,7 @@ public class SmartPlayer extends Player{
                 columnFail(card);
             }
             else{
+                poubelle.push(card);
                 revealCard();
             }
         }
@@ -93,7 +94,7 @@ public class SmartPlayer extends Player{
         int index=0;
         for (int i =0; i<column.length;i++){
             if(knownHand.getValeur(column[i])==knownHand.getValeur(card)){
-                break;
+                continue;
             }
             indexTab[index]=i;
             index+=1;
@@ -131,17 +132,14 @@ public class SmartPlayer extends Player{
 
     public void chooseWhereToReplace(Card card){
         if (whereEmptyColumn() != -1){
-            System.out.println("empty column");
             int i = whereEmptyColumn();
             int j=rd.nextInt(0,knownHand.get(i).length);
             replaceCard(i, j, card);
         }
-        else if(knownHand.nbKnownCard()<8){
-            System.out.println("replace null");
+        else if(knownHand.nbKnownCard()<8   || knownHand.getNbPoint()<10){
             replaceWhereNull(card);
         }
         else{
-            System.out.println("try replace");
             replaceHighCard(card);
         }
     }
@@ -154,15 +152,13 @@ public class SmartPlayer extends Player{
         do{
             i =rd.nextInt(0,knownHand.size());
             j=rd.nextInt(0,knownHand.get(0).length);
-        }while(knownHand.get(i)[j]!=null);
+        }while(knownHand.get(i)[j] != null);
         replaceCard(i, j, card);
     }
 
     public void replaceHighCard(Card card){
         int i=getIndexHighCard();
         int j = getIndexHighCardColumn(knownHand.get(i));
-        System.out.println(i+"column");
-        System.out.println(j);
         replaceCard(i, j, card);
     }
 

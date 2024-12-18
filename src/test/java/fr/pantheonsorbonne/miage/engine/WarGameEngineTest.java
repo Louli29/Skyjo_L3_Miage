@@ -117,7 +117,7 @@ class WarGameEngineTest {
 
     @Test
     void play() throws NoMoreCardException {
-        this.engine.play();
+        this.engine.playRound();
         assertThrows(NoMoreCardException.class, () -> this.engine.getCardFromPlayer("Joueur2"));
         assertThrows(NoMoreCardException.class, () -> this.engine.getCardFromPlayer("Joueur3"));
         Collection<Card> player1Cards = Arrays.asList(this.engine.getCardFromPlayer("Joueur1"), this.engine.getCardFromPlayer("Joueur1"), this.engine.getCardFromPlayer("Joueur1"));

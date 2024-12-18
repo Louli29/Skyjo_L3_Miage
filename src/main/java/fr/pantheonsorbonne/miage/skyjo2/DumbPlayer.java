@@ -20,7 +20,7 @@ public class DumbPlayer extends Player {
         }
         else{
             if(isFromTrash){
-                chooseKeepOrNot(d.piocher(),false);
+                chooseKeepOrNot(deck.piocher(),false);
             }
             else{
                 poubelle.push(card);
