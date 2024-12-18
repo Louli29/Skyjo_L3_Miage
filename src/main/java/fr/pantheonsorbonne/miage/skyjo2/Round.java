@@ -15,7 +15,7 @@ public class Round {
         this.players=players;
         poubelle=new LinkedList<Card>();
         poubelle.push(deck.piocher());
-
+        setFirstPlayer();
         for (Player player:players){
             Hand newHand= new Hand(deck);
             KnownHand newKnownHand=new KnownHand(newHand, poubelle);
@@ -48,9 +48,17 @@ public class Round {
 
     public void setFirstPlayer(){
         Player firstPlayer = players.get(0);
-        for(Player player : players){
-
+        int index = 0;
+        for(int i=1; i<players.size(); i++){
+            Player currPlayer = players.get(i);
+            if(currPlayer.knownHand.getNbPoint()>firstPlayer.knownHand.getNbPoint()){
+                firstPlayer=currPlayer;
+                index=i;
+            }
         }
+        players.add(index,players.get(0));
+        players.add(0,firstPlayer);
+        
     }
     
 
