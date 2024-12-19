@@ -41,7 +41,7 @@ public class DumbPlayer extends Player {
             i =rd.nextInt(0,knownHand.size());
             j=rd.nextInt(0,knownHand.get(0).length);
         }while(knownHand.get(i)[j] != null);
-        knownHand.get(i)[j]=hand.getCard(i, j);//mettre les memes méthodes pour hand et knownhand et faire de l'héritage
+        knownHand.get(i)[j]=hand.getCard(i, j);
     }
 
     public int whereIsColumn(){

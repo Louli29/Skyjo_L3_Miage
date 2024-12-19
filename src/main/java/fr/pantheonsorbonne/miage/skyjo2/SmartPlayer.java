@@ -49,7 +49,6 @@ public class SmartPlayer extends Player{
     }
 
     public void makeColumn(Card card ,int numColumn){ 
-        System.out.println("make column");
         Card[] column=knownHand.get(numColumn);
         int[] indexOthersCards=getIndexOtherCard(card,column);
         int bestIndex=chooseBestIndex(indexOthersCards,column);

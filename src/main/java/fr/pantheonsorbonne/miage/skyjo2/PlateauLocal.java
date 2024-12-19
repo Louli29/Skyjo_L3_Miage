@@ -2,13 +2,9 @@ package fr.pantheonsorbonne.miage.skyjo2;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.List;
 
 public class PlateauLocal extends PlateauFacade {
-    static Deque<Card> poubelle ;
-    static Deck deck; 
     
 
     public PlateauLocal(){
@@ -42,60 +38,34 @@ public class PlateauLocal extends PlateauFacade {
             }
         }
         Collections.swap(players, 0, index);
-        
-    }
-
-    public boolean isOverRound(){
-        for(Player player : players){
-            if(player.knownHand.nbKnownCard() == 12){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void playRound(){
-        setFirstPlayer();
-        poubelle.push(deck.piocher());
-        while (!isOverRound()) {
-            for(Player player : players){
-                System.out.println("\n"+"C'est au tour de "+player.getName()+"\n");
-                Card[] deckAndTrash={deck.piocher(),poubelle.pop()};
-                player.setPlayerTour(deckAndTrash);
-                player.jouer();
-                poubelle.push(player.getTrash());
-            }
-        }
-    }
-    public Card[] makeListCard(){
-        Card[] listCard=new Card[12];
-        for(int i=0; i<listCard.length;i++){
-            listCard[i]=deck.piocher();
-        }
-        return listCard;
-    }
-
-    public void playGame(){
-        while (!isOverGame()){
-            PlateauLocal.poubelle = new LinkedList<Card>() ;
-            PlateauLocal.deck=new Deck(poubelle);
-            for(Player player:players){
-                Card[] listCard=makeListCard();
-                giveCardsToPlayer(player,listCard);
-            }
-            playRound();
-            for(Player player:players){
-                player.addToScore(player.hand.getNbPoint());
-                System.out.println("\n"+player.getName());
-                System.out.println("Le score de ta manche : "+player.hand.getNbPoint());
-                System.out.println("Ton score totale : "+ player.getScore()+"\n");
-
-            }
-
-        }
     }
 
     
+
+    public void playRound(){
+        setFirstPlayer();
+        trash.push(deck.piocher());
+        while (!isOverRound()) {
+            for(Player player : players){
+                System.out.println("\n"+"C'est au tour de "+player.getName()+"\n");
+                Card[] deckAndTrash={deck.piocher(),trash.pop()};
+                player.setPlayerTour(deckAndTrash);
+                player.jouer();
+                trash.push(player.getTrash());
+            }
+        }
+    }
+
+
+    @Override
+    public int getScore(Player player) {
+        return player.getScore();
+    }
+
+    @Override
+    public int getNbKnownCard(Player player) {
+        return player.knownHand.nbKnownCard();
+    }
 
     public static void main(String[] args){
 

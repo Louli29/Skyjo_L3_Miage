@@ -14,9 +14,9 @@ public class Deck {
     Deque<Card> trash;
     
     
-    public Deck(Deque<Card> poubelle){
+    public Deck(Deque<Card> trash){
         this.pioche=makePioche();
-        this.trash=poubelle;
+        this.trash=trash;
         Collections.shuffle(pioche);
     }
 

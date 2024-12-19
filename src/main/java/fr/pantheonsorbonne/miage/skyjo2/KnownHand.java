@@ -10,11 +10,11 @@ public class KnownHand {
     
     public KnownHand(Hand hand){
         this.hand=hand;
-        this.knownHand=initialiserMainConnu(hand);
+        this.knownHand=makeKnownHand(hand);
         
     }
 
-    private List<Card[]> initialiserMainConnu(Hand hand) {
+    private List<Card[]> makeKnownHand(Hand hand) {
         List<Card[]> knownHand = new ArrayList<>();
         for (int i=0; i<4;i++){
             Card[] column=new Card[3];
@@ -93,11 +93,7 @@ public class KnownHand {
         return nbSameCard;
     }
 
-    public int getHighCard(Card[] column){ //to do implémenter si carte null continue sinon comparer maintenant facile vu q'un co la carte 00
-        return 0;
-    }
-
-    public int getValeur(Card card){//voire si vraiment utile
+    public int getValeur(Card card){
         if(card==null){
             return -3;
         }
