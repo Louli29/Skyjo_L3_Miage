@@ -7,7 +7,7 @@ public abstract class Player {
     protected final String name;
     protected int score;
     protected Hand hand;
-    protected KnownHand knownHand;
+    public KnownHand knownHand;
     Random rd = new Random();
     Card deck;
     Card trash;
@@ -91,6 +91,14 @@ public abstract class Player {
             }
         }
         return nb;
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
+
+    public Card getDeck() {
+        return deck;
     }
 
     
