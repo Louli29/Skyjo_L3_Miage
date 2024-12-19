@@ -1,6 +1,6 @@
 package fr.pantheonsorbonne.miage.skyjo2;
 
-public enum Valeur {
+public enum Value {
     DEUX_NEG(-2),
     UN_NEG(-1),
     ZERO(0),
@@ -20,7 +20,7 @@ public enum Valeur {
 
     private final int val;
 
-    private Valeur(int valeur) {
+    private Value(int valeur) {
         this.val= valeur;
     }
 

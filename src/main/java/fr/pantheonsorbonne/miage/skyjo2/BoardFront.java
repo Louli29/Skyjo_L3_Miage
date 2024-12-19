@@ -4,14 +4,14 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class PlateauFacade {
+public abstract class BoardFront {
     protected static Deck deck; 
     protected static Deque<Card> trash ;
     List<Player> players;
     final static int nbPlayers=2;
     
 
-    protected PlateauFacade(){
+    protected BoardFront(){
         
         this.players=makeListPlayers(nbPlayers);
     } 
@@ -30,10 +30,10 @@ public abstract class PlateauFacade {
             }
             playRound();
             for(Player player:players){ //modi cette partie bc get score doit être un truc def dans les enfants
-                player.addToScore(player.hand.getNbPoint());
+                player.addToScore(getNbPoint(player));
                 System.out.println("\n"+player.getName());
-                System.out.println("Le score de ta manche : "+player.hand.getNbPoint());
-                System.out.println("Ton score totale : "+ player.getScore()+"\n");
+                System.out.println("Le score de ta manche : "+getNbPoint(player));
+                System.out.println("Ton score totale : "+ getScore(player)+"\n");
 
             }
 
@@ -78,6 +78,7 @@ public abstract class PlateauFacade {
 
     public abstract int getNbKnownCard(Player player);
 
+    public abstract int getNbPoint(Player player);
 
 
 
