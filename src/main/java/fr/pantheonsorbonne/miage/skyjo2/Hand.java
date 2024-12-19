@@ -59,6 +59,11 @@ public class Hand {
         return points;
     }
 
+    public List<Card[]> getHand() {
+        return this.hand;
+    }
+    
+
 
 
 
