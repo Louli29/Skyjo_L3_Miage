@@ -35,7 +35,7 @@ public class FacadeGuest {
         }
     }
 
-    private static void play(GameCommand command) { //a implémenter
+    private static void play(GameCommand command) { 
         if (command.params().get("playerId").equals(playerId)) {
             
         }
