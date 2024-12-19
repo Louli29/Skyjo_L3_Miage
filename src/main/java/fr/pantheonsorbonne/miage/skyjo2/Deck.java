@@ -2,17 +2,21 @@ package fr.pantheonsorbonne.miage.skyjo2;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 
 public class Deck {
 
     private List<Card> pioche;
-    private final int nbMoinsDeux = 5;
+    private final int nbNegTwo = 5;
     private final int nbZero = 15;
-    private final int nbCarteClassique = 10;
+    private final int nbCardClassique = 10;
+    Deque<Card> trash;
     
-    public Deck(){
+    
+    public Deck(Deque<Card> poubelle){
         this.pioche=makePioche();
+        this.trash=poubelle;
         Collections.shuffle(pioche);
     }
 
@@ -20,7 +24,7 @@ public class Deck {
         List<Card> pioche = new ArrayList<>();
         for (Valeur val : Valeur.values()){
             if (val.getValeur()==-2){
-                for (int i=0; i<nbMoinsDeux; i++){
+                for (int i=0; i<nbNegTwo; i++){
                     pioche.add(new Card(val));
                 }
             }
@@ -30,7 +34,7 @@ public class Deck {
                 }
             }
             else{
-                for (int i=0; i<nbCarteClassique; i++){
+                for (int i=0; i<nbCardClassique; i++){
                     pioche.add(new Card(val));
                 }
             }
@@ -40,17 +44,19 @@ public class Deck {
     }
 
     public Card piocher(){
+        if (pioche.isEmpty()) {
+            reMakeDeck();
+        }
         Card card=pioche.get(0);
         pioche.remove(0);
         return  card ; 
     }
 
-    public int getMediane(){//ne fonctionne pas pour l'instant
-        int medCard=pioche.size()/2;
-        pioche.sort(null);
-        Card med = pioche.get(medCard);
+    private void reMakeDeck() {
+        pioche.addAll(trash);
+        trash.clear();
         Collections.shuffle(pioche);
-        return med.getValeur();
+        trash.push(piocher());
     }
 
 }

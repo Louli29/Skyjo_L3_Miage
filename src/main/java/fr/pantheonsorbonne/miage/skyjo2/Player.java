@@ -4,22 +4,36 @@ import java.util.Random;
 
 
 public abstract class Player { 
-    private final String name;
-    private int score;
-    Hand hand;
-    KnownHand knownHand;
+    protected final String name;
+    protected int score;
+    protected Hand hand;
+    protected KnownHand knownHand;
     Random rd = new Random();
-    Deck deck;
-    Deque<Card>  poubelle;
+    Card deck;
+    Card trash;
 
 
-    public Player(Deck d,Deque<Card>  p, String name, Hand hand, KnownHand knownHand){
+    public Player(String name){
         score=0;
         this.name=name;
-        this.deck=d;
-        this.poubelle=p;
+    }
+
+    public void setPlayerRound(Hand hand ){
         this.hand=hand;
-        this.knownHand=knownHand;
+        this.knownHand=new KnownHand(this.hand);
+    }
+
+    public void setPlayerTour(Card [] deckAndTrash){
+        this.deck=deckAndTrash[0];
+        this.trash=deckAndTrash[1];
+    }
+
+    public KnownHand getknownHand(){
+        return knownHand;
+    }
+
+    public Card getTrash(){
+        return trash;
     }
 
     public void replaceCard(int numColumn, int index, Card carteRemplacante){
@@ -29,7 +43,7 @@ public abstract class Player {
         }
         else{
             this.knownHand.get(numColumn)[index]=carteRemplacante;
-            poubelle.push(this.hand.remplacerCarte(numColumn,index,carteRemplacante));
+            trash=this.hand.remplacerCarte(numColumn,index,carteRemplacante);
         }
 
         
@@ -50,17 +64,17 @@ public abstract class Player {
     public void deleteColumn(Card card, int numColumn){
         Card[] column=knownHand.get(numColumn);
         for (int i=0; i<column.length; i++){
-            poubelle.push(column[i]);
+            trash=column[i];
         }
         knownHand.remove(numColumn);
         hand.deleteColumn(numColumn);
-        poubelle.push(card);
+        trash=card;
     }
 
     public void deleteColumn(int numColumn){
         Card[] column=knownHand.get(numColumn);
         for (int i=0; i<column.length; i++){
-            poubelle.push(column[i]);
+            trash=column[i];
         }
         knownHand.remove(numColumn);
         hand.deleteColumn(numColumn);

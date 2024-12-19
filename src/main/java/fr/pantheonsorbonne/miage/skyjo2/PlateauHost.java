@@ -9,6 +9,7 @@ import fr.pantheonsorbonne.miage.model.GameCommand;
 
 public class PlateauHost extends PlateauFacade {
 
+    private static final int PLAYER_COUNT = 2;
     private final HostFacade hostFacade;
     private final Game skyjo;
 

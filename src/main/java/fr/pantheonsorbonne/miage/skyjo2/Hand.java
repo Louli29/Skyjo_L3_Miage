@@ -6,16 +6,18 @@ import java.util.List;
 public class Hand {
     private List<Card[]> hand=new ArrayList<>();
 
-    public Hand(Deck d){
-        this.hand=makeHand(d);
+    public Hand(Card[] listCard){
+        this.hand=makeHand(listCard);
     }
 
-    private List<Card[]> makeHand(Deck d){
+    private List<Card[]> makeHand(Card[] listCard){
         List<Card[]> hand = new ArrayList<>();
+        int index=0;
         for (int i=0; i<4;i++){
             Card[] column=new Card[3];
             for(int j=0; j<3; j++){
-                column[j]=d.piocher();
+                column[j]=listCard[index];
+                index++;
             }
         hand.add(i,column);
         }

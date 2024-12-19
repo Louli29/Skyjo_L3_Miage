@@ -4,14 +4,14 @@ import java.util.Deque;
 
 public class SmartPlayer extends Player{
 
-    public SmartPlayer(Deck d, Deque<Card>  poubelle, String name,Hand hand, KnownHand knownHand){
-        super(d, poubelle, name, hand, knownHand);
+    public SmartPlayer(String name){
+        super(name);
     }
 
     public void chooseKeepOrNot(Card card, boolean isFromTrash){
         System.out.println("\n"+card.toString()+"\n");   
 
-        if (card.getValeur()<=0){
+        if (card.getValeur()<0){
                 chooseWhereToReplace(card);
         }
 
@@ -28,9 +28,9 @@ public class SmartPlayer extends Player{
             chooseWhereToReplace(card);
         }
         else{
-            poubelle.push(card);
+            trash=card;
             if(isFromTrash){
-                chooseKeepOrNot(deck.piocher(),false);
+                chooseKeepOrNot(deck,false);
             }
             else{
                 revealCard();
@@ -43,8 +43,8 @@ public class SmartPlayer extends Player{
             chooseWhereToReplace(card);
         }
         else{
-            poubelle.push(card);
-            chooseKeepOrNot(deck.piocher(),false);
+            trash=card;
+            chooseKeepOrNot(deck,false);
         }
     }
 
@@ -70,7 +70,7 @@ public class SmartPlayer extends Player{
                 columnFail(card);
             }
             else{
-                poubelle.push(card);
+                trash=card;
                 revealCard();
             }
             
@@ -80,7 +80,7 @@ public class SmartPlayer extends Player{
                 columnFail(card);
             }
             else{
-                poubelle.push(card);
+                trash=card;
                 revealCard();
             }
         }
@@ -201,7 +201,7 @@ public class SmartPlayer extends Player{
 
     public void jouer(){
         knownHand.showHand();
-        chooseKeepOrNot(poubelle.pop(), true);
+        chooseKeepOrNot(trash, true);
         knownHand.showHand();
     }
 

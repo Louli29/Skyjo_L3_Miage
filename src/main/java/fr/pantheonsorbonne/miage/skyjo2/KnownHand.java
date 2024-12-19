@@ -1,7 +1,6 @@
 package fr.pantheonsorbonne.miage.skyjo2;
 
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
 
 public class KnownHand {
@@ -9,7 +8,7 @@ public class KnownHand {
     Hand hand;
 
     
-    public KnownHand(Hand hand, Deque<Card>  poubelle){
+    public KnownHand(Hand hand){
         this.hand=hand;
         this.knownHand=initialiserMainConnu(hand);
         
