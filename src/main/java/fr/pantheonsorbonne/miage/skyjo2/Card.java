@@ -5,10 +5,10 @@ import java.util.stream.Collectors;
 
 public class Card {
 
-    private Valeur valeur;
+    private Value valeur;
     public Object getValeur;
 
-    public Card(Valeur valeur){
+    public Card(Value valeur){
         this.valeur = valeur;
     }
 
@@ -22,6 +22,16 @@ public class Card {
 
     public static String cardsToString(Card[] cards) {
         return Arrays.stream(cards).map(Card::toString).collect(Collectors.joining(";"));
+    }
+
+    public static Card toCard(String cardStr) {
+        Value valeur = Value.valueOf(cardStr.toUpperCase());
+        return new Card(valeur);
+    }
+    
+
+    public static Card[] stringToCards(String cards) {
+        return Arrays.stream(cards.split(";")).map(Card::toCard).toArray(Card[]::new);
     }
 
 }

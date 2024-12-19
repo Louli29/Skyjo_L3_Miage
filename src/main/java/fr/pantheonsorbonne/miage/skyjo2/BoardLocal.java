@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PlateauLocal extends PlateauFacade {
+public class BoardLocal extends BoardFront {
     
 
-    public PlateauLocal(){
+    public BoardLocal(){
         super();
         
     }
@@ -69,9 +69,14 @@ public class PlateauLocal extends PlateauFacade {
 
     public static void main(String[] args){
 
-        PlateauLocal plateau=new PlateauLocal();
+        BoardLocal plateau=new BoardLocal();
         plateau.playGame();
         
+    }
+
+    @Override
+    public int getNbPoint(Player player) {
+        return player.hand.getNbPoint();
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Deck {
 
-    private List<Card> pioche;
+    private List<Card> deck;
     private final int nbNegTwo = 5;
     private final int nbZero = 15;
     private final int nbCardClassique = 10;
@@ -15,14 +15,14 @@ public class Deck {
     
     
     public Deck(Deque<Card> trash){
-        this.pioche=makePioche();
+        this.deck=makePioche();
         this.trash=trash;
-        Collections.shuffle(pioche);
+        Collections.shuffle(deck);
     }
 
     public List<Card> makePioche(){
         List<Card> pioche = new ArrayList<>();
-        for (Valeur val : Valeur.values()){
+        for (Value val : Value.values()){
             if (val.getValeur()==-2){
                 for (int i=0; i<nbNegTwo; i++){
                     pioche.add(new Card(val));
@@ -44,19 +44,23 @@ public class Deck {
     }
 
     public Card piocher(){
-        if (pioche.isEmpty()) {
+        if (deck.isEmpty()) {
             reMakeDeck();
         }
-        Card card=pioche.get(0);
-        pioche.remove(0);
+        Card card=deck.get(0);
+        deck.remove(0);
         return  card ; 
     }
 
     private void reMakeDeck() {
-        pioche.addAll(trash);
+        deck.addAll(trash);
         trash.clear();
-        Collections.shuffle(pioche);
+        Collections.shuffle(deck);
         trash.push(piocher());
+    }
+
+    public void add(Card card) {
+        deck.add(card);
     }
 
 }
